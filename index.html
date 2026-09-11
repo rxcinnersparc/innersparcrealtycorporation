@@ -37,39 +37,6 @@
             font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
         
-        /* Minimal loading spinner */
-        .loading-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: #f4f5fb;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            transition: opacity 0.3s ease;
-        }
-        
-        .loading-container.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-        
-        .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid #dde0f0;
-            border-top-color: #222689;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
         #gas-iframe {
             width: 100%;
             height: 100%;
@@ -158,11 +125,6 @@
     </style>
 </head>
 <body>    
-    <!-- Minimal loading spinner -->
-    <div class="loading-container" id="loadingContainer">
-        <div class="loading-spinner"></div>
-    </div>
-    
     <div class="error-message" id="errorMessage">
         <button class="close-button" id="closeErrorModal" aria-label="Close error modal">&times;</button>
         <div class="error-icon">⚠️</div>
@@ -182,7 +144,6 @@
         const iframe = document.getElementById('gas-iframe');
         const errorMessage = document.getElementById('errorMessage');
         const errorText = document.getElementById('errorText');
-        const loadingContainer = document.getElementById('loadingContainer');
         const closeErrorModal = document.getElementById('closeErrorModal');
         
         let hasLoaded = false;
@@ -208,7 +169,6 @@
             if (hasLoaded) return;
             
             clearTimeout(loadTimeout);
-            loadingContainer.classList.add('hidden');
             errorText.textContent = message || 'Unable to load the application. Please check your internet connection and try again.';
             errorMessage.classList.add('show');
         }
@@ -219,12 +179,6 @@
             
             clearTimeout(loadTimeout);
             hasLoaded = true;
-            
-            // Hide loading spinner
-            loadingContainer.classList.add('hidden');
-            setTimeout(() => {
-                loadingContainer.style.display = 'none';
-            }, 300);
         }
         
         // Function to handle iframe errors
