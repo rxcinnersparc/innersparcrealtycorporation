@@ -1,7 +1,5 @@
-# Replace YOUR-GITHUB-USERNAME.github.io/YOUR-REPOSITORY with your real public site URL.
-# This file should be uploaded to the repository root so it is available at /robots.txt.
-
+# Allow search engines to crawl the public site.
 User-agent: *
 Allow: /
 
-Sitemap: https://YOUR-GITHUB-USERNAME.github.io/YOUR-REPOSITORY/sitemap.xml
+Sitemap: https://innersparcrealtycorporation.vercel.app/sitemap.xml
