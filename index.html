@@ -1,263 +1,155 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Inner SPARC Realty Corporation Official Website</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HWXJY5TH2G"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-    
-      gtag('config', 'G-HWXJY5TH2G');
-    </script>
+  <!-- Replace every [REPLACE ...] value before publishing. -->
+  <title>Inner SPARC Realty Corporation | [REPLACE primary service] in [REPLACE service area]</title>
+  <meta name="description" content="Inner SPARC Realty Corporation provides [REPLACE accurate service description] for [REPLACE customer type] in [REPLACE service area]. Learn about our services and contact us.">
+  <link rel="canonical" href="https://innersparcrealtycorporation.vercel.app/">
 
-    <!-- Favicon for browser tab -->
-    <link rel="icon" type="image/png" href="https://i.imgur.com/TcCQCER.png">
-    <link rel="shortcut icon" type="image/png" href="https://i.imgur.com/TcCQCER.png">
-    
-    <!-- For Apple devices -->
-    <link rel="apple-touch-icon" href="https://i.imgur.com/TcCQCER.png">
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body, html {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background: #f4f5fb;
-            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        }
-        
-        #gas-iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: block;
-        }
-        
-        /* Error message */
-        .error-message {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            border-radius: 12px;
-            padding: 24px;
-            text-align: center;
-            max-width: 90%;
-            width: 320px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-            border: 1px solid #f5c2c2;
-            display: none;
-            z-index: 10001;
-        }
-        
-        .error-message.show {
-            display: block;
-        }
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Inner SPARC Realty Corporation">
+  <meta property="og:title" content="Inner SPARC Realty Corporation | [REPLACE primary service] in [REPLACE service area]">
+  <meta property="og:description" content="[REPLACE one-sentence, customer-focused description].">
+  <meta property="og:url" content="https://innersparcrealtycorporation.vercel.app/">
+  <meta property="og:image" content="https://innersparcrealtycorporation.vercel.app/assets/social-preview.jpg">
+  <meta name="twitter:card" content="summary_large_image">
 
-        /* Close (x) button */
-        .close-button {
-            position: absolute;
-            top: 10px;
-            right: 12px;
-            background: transparent;
-            border: none;
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: #7b7fa8;
-            cursor: pointer;
-            line-height: 1;
-            padding: 4px 8px;
-            border-radius: 50%;
-            transition: color 0.2s ease, background 0.2s ease;
-        }
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
 
-        .close-button:hover {
-            color: #333;
-            background: #f0f1f7;
-        }
-        
-        .error-icon {
-            font-size: 48px;
-            margin-bottom: 12px;
-        }
-        
-        .error-title {
-            font-size: 1rem;
-            font-weight: 800;
-            color: #c0392b;
-            margin-bottom: 8px;
-        }
-        
-        .error-text {
-            font-size: 0.75rem;
-            color: #7b7fa8;
-            margin-bottom: 16px;
-            line-height: 1.5;
-        }
-        
-        .error-button {
-            background: #222689;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-family: inherit;
-            font-weight: 700;
-            cursor: pointer;
-            font-size: 0.75rem;
-        }
-        
-        .error-button:hover {
-            background: #1a1d6e;
-        }
-    </style>
+  <!-- Add Organization or RealEstateAgent JSON-LD only after replacing the values with verified information. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://innersparcrealtycorporation.vercel.app/#organization",
+    "name": "Inner SPARC Realty Corporation",
+    "url": "https://innersparcrealtycorporation.vercel.app/",
+    "logo": "https://innersparcrealtycorporation.vercel.app/assets/logo.png",
+    "description": "[REPLACE accurate business description]",
+    "sameAs": [
+      "https://[REPLACE-verified-social-profile]"
+    ]
+  }
+  </script>
+
+  <style>
+    :root { --ink:#1d224f; --muted:#5d6384; --accent:#222689; --surface:#f4f5fb; --line:#dfe2ef; }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; color: var(--ink); background: var(--surface); font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.6; }
+    a { color: var(--accent); }
+    .skip-link { position:absolute; left:-9999px; padding:.75rem 1rem; background:#fff; z-index:10; }
+    .skip-link:focus { left:1rem; top:1rem; }
+    header, main, footer { width:min(1120px, calc(100% - 2rem)); margin-inline:auto; }
+    header { padding:1rem 0; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+    .brand { display:flex; align-items:center; gap:.75rem; font-weight:800; text-decoration:none; color:var(--ink); }
+    .brand img { width:44px; height:44px; object-fit:contain; }
+    nav { display:flex; flex-wrap:wrap; gap:1rem; }
+    nav a { font-weight:650; text-decoration:none; }
+    .hero, section { background:#fff; border:1px solid var(--line); border-radius:18px; padding:clamp(1.25rem, 4vw, 3rem); margin:1rem 0; }
+    .hero { background:linear-gradient(135deg,#fff 0%,#eef0ff 100%); }
+    h1, h2 { line-height:1.15; margin-top:0; }
+    h1 { max-width:820px; font-size:clamp(2rem, 5vw, 4rem); }
+    h2 { font-size:clamp(1.4rem, 3vw, 2rem); }
+    .lead { max-width:760px; font-size:1.15rem; color:var(--muted); }
+    .button { display:inline-block; padding:.8rem 1rem; border-radius:10px; background:var(--accent); color:#fff; text-decoration:none; font-weight:750; margin:.35rem .5rem .35rem 0; }
+    .button.secondary { background:#fff; color:var(--accent); border:1px solid var(--accent); }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem; }
+    .card { border:1px solid var(--line); border-radius:12px; padding:1rem; }
+    .card h3 { margin-top:0; }
+    .app-shell { padding:0; overflow:hidden; }
+    .app-shell h2, .app-shell p, .app-shell .fallback { margin-inline:clamp(1.25rem, 4vw, 3rem); }
+    #gas-iframe { display:block; width:100%; min-height:760px; border:0; }
+    footer { padding:2rem 0 3rem; color:var(--muted); }
+    .small { font-size:.9rem; color:var(--muted); }
+    @media (max-width:700px) { header { align-items:flex-start; flex-direction:column; } nav { gap:.7rem; } #gas-iframe { min-height:680px; } }
+  </style>
 </head>
-<body>    
-    <div class="error-message" id="errorMessage">
-        <button class="close-button" id="closeErrorModal" aria-label="Close error modal">&times;</button>
-        <div class="error-icon">⚠️</div>
-        <div class="error-title">Connection Error</div>
-        <div class="error-text" id="errorText">
-            Unable to load the application. Please check your internet connection and try again.
-        </div>
-        <button class="error-button" onclick="location.reload()">Retry</button>
-    </div>
-    
-    <iframe id="gas-iframe" src="about:blank" allow="geolocation; clipboard-read; clipboard-write"></iframe>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <header>
+    <a class="brand" href="/" aria-label="Inner SPARC Realty Corporation home">
+      <img src="/assets/logo.png" alt="Inner SPARC Realty Corporation logo">
+      <span>Inner SPARC Realty Corporation</span>
+    </a>
+    <nav aria-label="Primary navigation">
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
 
-    <script>
-        // ⚠️ IMPORTANT: Replace this with your actual Google Apps Script Web App URL
-        const GAS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbw4C6TqOXIofHtbXH_R0oPUIYakB0HbPjKqX0zURkLonZk23ZY9weuJ8TcjoXt9PazyFA/exec';
-        
-        const iframe = document.getElementById('gas-iframe');
-        const errorMessage = document.getElementById('errorMessage');
-        const errorText = document.getElementById('errorText');
-        const closeErrorModal = document.getElementById('closeErrorModal');
-        
-        let hasLoaded = false;
-        let loadTimeout;
-        
-        // Function to hide error modal
-        function hideError() {
-            errorMessage.classList.remove('show');
-        }
+  <main id="main-content">
+    <section class="hero" aria-labelledby="page-title">
+      <h1> [REPLACE primary service] for [REPLACE customer type] in [REPLACE service area]</h1>
+      <p class="lead"><strong>Inner SPARC Realty Corporation</strong> provides [REPLACE accurate, specific business description]. We help [REPLACE audience] with [REPLACE the main outcome or service].</p>
+      <a class="button" href="#contact">Contact Inner SPARC</a>
+      <a class="button secondary" href="#services">Explore services</a>
+    </section>
 
-        // Event listener for close button
-        closeErrorModal.addEventListener('click', hideError);
+    <section id="about" aria-labelledby="about-title">
+      <h2 id="about-title">About Inner SPARC Realty Corporation</h2>
+      <p>[REPLACE 80–120 words describing the company, its experience, differentiators, market, and the type of clients it serves. Use specific first-hand facts. Do not use generic marketing claims that cannot be verified.]</p>
+    </section>
 
-        // Optional: Allow pressing ESC to close modal
-        window.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape' && errorMessage.classList.contains('show')) {
-                hideError();
-            }
-        });
+    <section id="services" aria-labelledby="services-title">
+      <h2 id="services-title">Real-estate services</h2>
+      <div class="grid">
+        <article class="card"><h3>[REPLACE Service 1]</h3><p>[REPLACE what the service includes, who it is for, and the next step.]</p><a href="/services/[replace-service-1]/">Learn about [REPLACE Service 1]</a></article>
+        <article class="card"><h3>[REPLACE Service 2]</h3><p>[REPLACE what the service includes, who it is for, and the next step.]</p><a href="/services/[replace-service-2]/">Learn about [REPLACE Service 2]</a></article>
+        <article class="card"><h3>[REPLACE Service 3]</h3><p>[REPLACE what the service includes, who it is for, and the next step.]</p><a href="/services/[replace-service-3]/">Learn about [REPLACE Service 3]</a></article>
+      </div>
+    </section>
 
-        // Function to show error
-        function showError(message) {
-            if (hasLoaded) return;
-            
-            clearTimeout(loadTimeout);
-            errorText.textContent = message || 'Unable to load the application. Please check your internet connection and try again.';
-            errorMessage.classList.add('show');
-        }
-        
-        // Function to handle successful load
-        function onIframeLoad() {
-            if (hasLoaded) return;
-            
-            clearTimeout(loadTimeout);
-            hasLoaded = true;
-        }
-        
-        // Function to handle iframe errors
-        function onIframeError() {
-            if (hasLoaded) return;
-            showError('Failed to load the application. The Google Apps Script web app might be unavailable or the URL is incorrect.');
-        }
-        
-        // Build the full URL with preserved query parameters and hash
-        function buildIframeUrl() {
-            let url = GAS_WEBAPP_URL;
-            
-            // Preserve URL parameters from the wrapper URL
-            const params = new URLSearchParams(window.location.search);
-            const hash = window.location.hash;
-            
-            if (params.toString()) {
-                url += '?' + params.toString();
-            }
-            
-            if (hash) {
-                url += (params.toString() ? '&' : '?') + 'hash=' + encodeURIComponent(hash.substring(1));
-            }
-            
-            return url;
-        }
-        
-        // Set iframe source
-        const iframeUrl = buildIframeUrl();
-        iframe.src = iframeUrl;
-        
-        // Set timeout for loading (15 seconds max)
-        loadTimeout = setTimeout(() => {
-            if (!hasLoaded) {
-                showError('Loading timeout. The application is taking too long to respond. Please try again.');
-            }
-        }, 15000);
-        
-        // Attach iframe event listeners
-        iframe.addEventListener('load', onIframeLoad);
-        iframe.addEventListener('error', onIframeError);
-        
-        // Optional: Handle postMessage communication from the embedded app
-        window.addEventListener('message', function(event) {
-            // Verify origin for security (optional but recommended)
-            if (event.origin !== 'https://script.google.com') return;
-            
-            // Handle different message types from your Apps Script app
-            if (event.data && event.data.type) {
-                switch(event.data.type) {
-                    case 'navigate':
-                        // Update URL without reloading
-                        if (event.data.url && event.data.url !== window.location.pathname) {
-                            history.pushState(null, '', event.data.url);
-                        }
-                        break;
-                    case 'setTitle':
-                        if (event.data.title) {
-                            document.title = event.data.title;
-                        }
-                        break;
-                    case 'ready':
-                        console.log('Apps Script app is ready');
-                        break;
-                }
-            }
-        });
-        
-        // Handle browser back/forward buttons
-        window.addEventListener('popstate', function() {
-            // Send message to iframe about URL change
-            iframe.contentWindow.postMessage({
-                type: 'popstate',
-                url: window.location.href
-            }, '*');
-        });
-        
-        // Log successful setup (for debugging)
-        console.log('GitHub Pages wrapper loaded. Iframe URL:', iframeUrl);
-    </script>
+    <section aria-labelledby="area-title">
+      <h2 id="area-title">Areas we serve</h2>
+      <p>[REPLACE the exact cities, regions, or neighborhoods served. Link each meaningful area to a page with unique, useful local information.]</p>
+    </section>
+
+    <section id="faq" aria-labelledby="faq-title">
+      <h2 id="faq-title">Frequently asked questions</h2>
+      <h3>What does Inner SPARC Realty Corporation do?</h3>
+      <p>Inner SPARC Realty Corporation provides [REPLACE accurate answer].</p>
+      <h3>How do I get started?</h3>
+      <p>[REPLACE the real first step, expected response time, and preferred contact method.]</p>
+      <h3>Where does Inner SPARC serve clients?</h3>
+      <p>[REPLACE accurate service area.]</p>
+    </section>
+
+    <section id="contact" aria-labelledby="contact-title">
+      <h2 id="contact-title">Contact Inner SPARC Realty Corporation</h2>
+      <p>[REPLACE a clear call to action.]</p>
+      <p><strong>Phone:</strong> <a href="tel:[REPLACE-phone-international]">[REPLACE phone]</a><br>
+      <strong>Email:</strong> <a href="mailto:[REPLACE-email]">[REPLACE email]</a><br>
+      <strong>Hours:</strong> [REPLACE verified hours]</p>
+    </section>
+
+    <section class="app-shell" aria-labelledby="app-title">
+      <h2 id="app-title">Client application</h2>
+      <p>Use the application below to [REPLACE accurate purpose]. If it does not load, <a href="https://[REPLACE-your-domain]/contact/">contact Inner SPARC directly</a>.</p>
+      <iframe id="gas-iframe" title="Inner SPARC Realty Corporation client application" src="about:blank" loading="lazy" allow="geolocation; clipboard-read; clipboard-write"></iframe>
+      <p class="fallback small">The application is provided by Google Apps Script. Public information about Inner SPARC is available on this page without relying on the embedded application.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p><strong>Inner SPARC Realty Corporation</strong> · [REPLACE service area]</p>
+    <p><a href="/privacy/">Privacy policy</a> · <a href="/terms/">Terms</a> · <a href="/contact/">Contact</a></p>
+  </footer>
+
+  <script>
+    const GAS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbw4C6TqOXIofHtbXH_Ro0PUIYakB0HbPjKqX0zURkLonZk23ZY9weuJ8TcjoXt9PazyFA/exec';
+    const iframe = document.getElementById('gas-iframe');
+    const params = new URLSearchParams(window.location.search);
+    const hash = window.location.hash;
+    let iframeUrl = GAS_WEBAPP_URL;
+    if (params.toString()) iframeUrl += '?' + params.toString();
+    if (hash) iframeUrl += (params.toString() ? '&' : '?') + 'hash=' + encodeURIComponent(hash.slice(1));
+    iframe.src = iframeUrl;
+  </script>
 </body>
 </html>
