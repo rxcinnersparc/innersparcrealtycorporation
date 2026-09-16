@@ -1,0 +1,7 @@
+# Replace YOUR-GITHUB-USERNAME.github.io/YOUR-REPOSITORY with your real public site URL.
+# This file should be uploaded to the repository root so it is available at /robots.txt.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://YOUR-GITHUB-USERNAME.github.io/YOUR-REPOSITORY/sitemap.xml
