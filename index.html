@@ -2,9 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Inner SPARC Realty Corporation">
+    <meta name="theme-color" content="#222689">
+    <meta name="format-detection" content="telephone=no">
     <title>Inner SPARC Realty Corporation | Official Website</title>
-    <meta name="description" content="Visit the official website of Inner SPARC Realty Corporation to learn about the company and access its web application.">
+    <meta name="description" content="Visit the official website of Inner SPARC Realty Corporation for company information and access to its web application.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://innersparcrealtycorporation.vercel.app/">
     <meta property="og:type" content="website">
@@ -13,7 +16,13 @@
     <meta property="og:description" content="Learn about Inner SPARC Realty Corporation and access its official web application.">
     <meta property="og:url" content="https://innersparcrealtycorporation.vercel.app/">
     <meta property="og:image" content="https://innersparcrealtycorporation.vercel.app/favlogo-512.png">
+    <meta property="og:image:alt" content="Inner SPARC Realty Corporation logo">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Inner SPARC Realty Corporation | Official Website">
+    <meta name="twitter:description" content="Visit the official website of Inner SPARC Realty Corporation for company information and access to its web application.">
+    <meta name="twitter:image" content="https://innersparcrealtycorporation.vercel.app/favlogo-512.png">
+    <link rel="preconnect" href="https://script.google.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-9YZJ3Y1VWS"></script>
@@ -58,6 +67,17 @@
             "@id": "https://innersparcrealtycorporation.vercel.app/#organization"
           },
           "inLanguage": "en"
+        },
+        {
+          "@type": "WebApplication",
+          "@id": "https://innersparcrealtycorporation.vercel.app/#application",
+          "name": "Inner SPARC Realty Corporation Web Application",
+          "url": "https://innersparcrealtycorporation.vercel.app/",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "Web browser",
+          "isPartOf": {
+            "@id": "https://innersparcrealtycorporation.vercel.app/#website"
+          }
         }
       ]
     }
@@ -79,18 +99,34 @@
         body, html {
             width: 100%;
             height: 100%;
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto;
             background: #f4f5fb;
             font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
         
         #gas-iframe {
             width: 100%;
+            min-height: 100vh;
             height: 100%;
             border: none;
             display: block;
         }
         
+        .seo-fallback {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 2rem 1.25rem;
+            color: #222;
+            background: #fff;
+            line-height: 1.6;
+        }
+
+        .seo-fallback h1 {
+            margin-bottom: 0.75rem;
+            color: #222689;
+        }
+
         /* Error message */
         .error-message {
             position: fixed;
@@ -182,7 +218,15 @@
         <button class="error-button" onclick="location.reload()">Retry</button>
     </div>
     
-    <iframe id="gas-iframe" src="about:blank" allow="geolocation; clipboard-read; clipboard-write"></iframe>
+        <iframe id="gas-iframe" title="Inner SPARC Realty Corporation web application" src="about:blank" allow="geolocation; clipboard-read; clipboard-write"></iframe>
+
+        <noscript>
+            <main class="seo-fallback">
+                <h1>Inner SPARC Realty Corporation</h1>
+                <p>Visit the official website of Inner SPARC Realty Corporation for company information and access to its web application.</p>
+                <p>JavaScript is required to load the web application. Please enable JavaScript and reload this page.</p>
+            </main>
+        </noscript>
 
     <script>
         // ⚠️ IMPORTANT: Replace this with your actual Google Apps Script Web App URL
