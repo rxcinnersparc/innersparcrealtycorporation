@@ -15,17 +15,14 @@
     <meta property="og:image" content="https://innersparcrealtycorporation.vercel.app/favlogo-512.png">
     <meta name="twitter:card" content="summary_large_image">
 
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-9YZJ3Y1VWS"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-    
-      gtag('config', 'G-9YZJ3Y1VWS');
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-9YZJ3Y1VWS');
     </script>
 
-    <!-- JSON-LD structured data for SEO, AEO, and entity understanding -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -41,289 +38,225 @@
           "@id": "https://innersparcrealtycorporation.vercel.app/#website",
           "url": "https://innersparcrealtycorporation.vercel.app/",
           "name": "Inner SPARC Realty Corporation Official Website",
-          "publisher": {
-            "@id": "https://innersparcrealtycorporation.vercel.app/#organization"
-          },
-          "inLanguage": "en"
-        },
-        {
-          "@type": "WebPage",
-          "@id": "https://innersparcrealtycorporation.vercel.app/#webpage",
-          "url": "https://innersparcrealtycorporation.vercel.app/",
-          "name": "Inner SPARC Realty Corporation Official Website",
-          "isPartOf": {
-            "@id": "https://innersparcrealtycorporation.vercel.app/#website"
-          },
-          "about": {
-            "@id": "https://innersparcrealtycorporation.vercel.app/#organization"
-          },
+          "publisher": { "@id": "https://innersparcrealtycorporation.vercel.app/#organization" },
           "inLanguage": "en"
         }
       ]
     }
     </script>
 
-    <!-- Inner SPARC favicon generated from the supplied Google Drive logo -->
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
     <link rel="icon" type="image/png" sizes="512x512" href="/favlogo-512.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body, html {
+        * { box-sizing: border-box; }
+        html, body {
             width: 100%;
             height: 100%;
+            margin: 0;
             overflow: hidden;
             background: #f4f5fb;
-            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: Montserrat, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         }
-        
         #gas-iframe {
+            display: block;
             width: 100%;
             height: 100%;
-            border: none;
-            display: block;
+            border: 0;
+            background: #fff;
         }
-        
-        /* Crawlable text that does not change the full-screen app layout */
         .seo-content {
             position: absolute;
             width: 1px;
             height: 1px;
-            padding: 0;
             margin: -1px;
+            padding: 0;
             overflow: hidden;
             clip: rect(0, 0, 0, 0);
             white-space: nowrap;
             border: 0;
         }
-
-        /* Error message */
+        .loading-message,
         .error-message {
             position: fixed;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            border-radius: 12px;
-            padding: 24px;
-            text-align: center;
-            max-width: 90%;
-            width: 320px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-            border: 1px solid #f5c2c2;
-            display: none;
             z-index: 10001;
+            width: min(90%, 380px);
+            transform: translate(-50%, -50%);
+            padding: 24px;
+            border-radius: 12px;
+            background: #fff;
+            text-align: center;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .15);
         }
-        
-        .error-message.show {
-            display: block;
+        .loading-message { color: #222689; }
+        .error-message {
+            display: none;
+            border: 1px solid #f5c2c2;
         }
-
-        /* Close (x) button */
-        .close-button {
-            position: absolute;
-            top: 10px;
-            right: 12px;
-            background: transparent;
-            border: none;
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: #7b7fa8;
-            cursor: pointer;
-            line-height: 1;
-            padding: 4px 8px;
-            border-radius: 50%;
-            transition: color 0.2s ease, background 0.2s ease;
-        }
-
-        .close-button:hover {
-            color: #333;
-            background: #f0f1f7;
-        }
-        
-        .error-icon {
-            font-size: 48px;
-            margin-bottom: 12px;
-        }
-        
-        .error-title {
+        .error-message.show { display: block; }
+        .loading-message.hide { display: none; }
+        .icon { margin-bottom: 12px; font-size: 42px; }
+        .title {
+            margin-bottom: 8px;
+            color: #222689;
             font-size: 1rem;
             font-weight: 800;
-            color: #c0392b;
-            margin-bottom: 8px;
         }
-        
-        .error-text {
-            font-size: 0.75rem;
-            color: #7b7fa8;
+        .error-title { color: #c0392b; }
+        .message {
             margin-bottom: 16px;
+            color: #626783;
+            font-size: .8rem;
             line-height: 1.5;
         }
-        
-        .error-button {
-            background: #222689;
-            color: white;
-            border: none;
-            padding: 10px 20px;
+        button, .direct-link {
+            display: inline-block;
+            border: 0;
             border-radius: 8px;
-            font-family: inherit;
+            padding: 10px 16px;
+            background: #222689;
+            color: #fff;
+            font: inherit;
+            font-size: .8rem;
             font-weight: 700;
+            text-decoration: none;
             cursor: pointer;
-            font-size: 0.75rem;
         }
-        
-        .error-button:hover {
-            background: #1a1d6e;
+        button:hover, .direct-link:hover { background: #1a1d6e; }
+        .direct-link { margin-left: 6px; background: #626783; }
+        .close-button {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            padding: 4px 8px;
+            background: transparent;
+            color: #7b7fa8;
+            font-size: 1.25rem;
         }
+        .close-button:hover { background: #f0f1f7; color: #333; }
     </style>
 </head>
-<body>    
+<body>
     <section class="seo-content" aria-label="About Inner SPARC Realty Corporation">
         <h1>Inner SPARC Realty Corporation</h1>
         <p>Visit the official website of Inner SPARC Realty Corporation for company information and access to its web application.</p>
     </section>
 
-    <div class="error-message" id="errorMessage">
-        <button class="close-button" id="closeErrorModal" aria-label="Close error modal">&times;</button>
-        <div class="error-icon">⚠️</div>
-        <div class="error-title">Connection Error</div>
-        <div class="error-text" id="errorText">
-            Unable to load the application. Please check your internet connection and try again.
-        </div>
-        <button class="error-button" onclick="location.reload()">Retry</button>
+    <div class="loading-message" id="loadingMessage" role="status" aria-live="polite">
+        <div class="icon">⏳</div>
+        <div class="title">Loading application</div>
+        <div class="message">Please wait while the Inner SPARC Realty Corporation application loads.</div>
     </div>
-    
-    <iframe id="gas-iframe" title="Inner SPARC Realty Corporation web application" src="about:blank" allow="geolocation; clipboard-read; clipboard-write"></iframe>
+
+    <div class="error-message" id="errorMessage" role="alert" aria-live="assertive">
+        <button class="close-button" id="closeErrorModal" type="button" aria-label="Close error message">&times;</button>
+        <div class="icon">⚠️</div>
+        <div class="title error-title">Connection Error</div>
+        <div class="message" id="errorText">Unable to load the application. Please try again.</div>
+        <button id="retryButton" type="button">Retry</button>
+        <a id="directLink" class="direct-link" target="_blank" rel="noopener noreferrer">Open directly</a>
+    </div>
+
+    <iframe
+        id="gas-iframe"
+        title="Inner SPARC Realty Corporation web application"
+        src="about:blank"
+        allow="geolocation; clipboard-read; clipboard-write">
+    </iframe>
 
     <script>
-        // ⚠️ IMPORTANT: Replace this with your actual Google Apps Script Web App URL
+        // Use the deployed Google Apps Script URL ending in /exec.
         const GAS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbw4C6TqOXIofHtbXH_R0oPUIYakB0HbPjKqX0zURkLonZk23ZY9weuJ8TcjoXt9PazyFA/exec';
-        
+        const LOAD_TIMEOUT_MS = 120000;
+
         const iframe = document.getElementById('gas-iframe');
+        const loadingMessage = document.getElementById('loadingMessage');
         const errorMessage = document.getElementById('errorMessage');
         const errorText = document.getElementById('errorText');
         const closeErrorModal = document.getElementById('closeErrorModal');
-        
+        const retryButton = document.getElementById('retryButton');
+        const directLink = document.getElementById('directLink');
+
+        let loadTimer;
         let hasLoaded = false;
-        let loadTimeout;
-        
-        // Function to hide error modal
+
+        function buildIframeUrl() {
+            const target = new URL(GAS_WEBAPP_URL);
+            const currentParams = new URLSearchParams(window.location.search);
+
+            currentParams.forEach((value, key) => target.searchParams.set(key, value));
+            if (window.location.hash) {
+                target.searchParams.set('hash', window.location.hash.substring(1));
+            }
+            return target.toString();
+        }
+
         function hideError() {
             errorMessage.classList.remove('show');
         }
 
-        // Event listener for close button
-        closeErrorModal.addEventListener('click', hideError);
-
-        // Optional: Allow pressing ESC to close modal
-        window.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape' && errorMessage.classList.contains('show')) {
-                hideError();
-            }
-        });
-
-        // Function to show error
         function showError(message) {
             if (hasLoaded) return;
-            
-            clearTimeout(loadTimeout);
-            errorText.textContent = message || 'Unable to load the application. Please check your internet connection and try again.';
+            clearTimeout(loadTimer);
+            loadingMessage.classList.add('hide');
+            errorText.textContent = message;
             errorMessage.classList.add('show');
         }
-        
-        // Function to handle successful load
-        function onIframeLoad() {
-            if (hasLoaded) return;
-            
-            clearTimeout(loadTimeout);
-            hasLoaded = true;
+
+        function loadApplication() {
+            hasLoaded = false;
             hideError();
-        }
-        
-        // Function to handle iframe errors
-        function onIframeError() {
-            if (hasLoaded) return;
-            showError('Failed to load the application. The Google Apps Script web app might be unavailable or the URL is incorrect.');
-        }
-        
-        // Build the full URL with preserved query parameters and hash
-        function buildIframeUrl() {
-            let url = GAS_WEBAPP_URL;
-            
-            // Preserve URL parameters from the wrapper URL
-            const params = new URLSearchParams(window.location.search);
-            const hash = window.location.hash;
-            
-            if (params.toString()) {
-                url += '?' + params.toString();
-            }
-            
-            if (hash) {
-                url += (params.toString() ? '&' : '?') + 'hash=' + encodeURIComponent(hash.substring(1));
-            }
-            
-            return url;
-        }
-        
-        // Attach listeners before setting src so a fast load cannot be missed.
-        iframe.addEventListener('load', onIframeLoad);
-        iframe.addEventListener('error', onIframeError);
+            loadingMessage.classList.remove('hide');
 
-        // Set iframe source.
-        const iframeUrl = buildIframeUrl();
-        iframe.src = iframeUrl;
+            const iframeUrl = buildIframeUrl();
+            directLink.href = iframeUrl;
+            iframe.src = iframeUrl;
 
-        // Google Apps Script may need extra time to initialize inside an iframe.
-        loadTimeout = setTimeout(() => {
-            if (!hasLoaded) {
-                showError('The application is taking longer than expected to load. Please try again.');
-            }
-        }, 45000);
-        
-        // Optional: Handle postMessage communication from the embedded app
-        window.addEventListener('message', function(event) {
-            // Verify origin for security (optional but recommended)
-            if (event.origin !== 'https://script.google.com') return;
-            
-            // Handle different message types from your Apps Script app
-            if (event.data && event.data.type) {
-                switch(event.data.type) {
-                    case 'navigate':
-                        // Update URL without reloading
-                        if (event.data.url && event.data.url !== window.location.pathname) {
-                            history.pushState(null, '', event.data.url);
-                        }
-                        break;
-                    case 'setTitle':
-                        if (event.data.title) {
-                            document.title = event.data.title;
-                        }
-                        break;
-                    case 'ready':
-                        console.log('Apps Script app is ready');
-                        break;
-                }
+            clearTimeout(loadTimer);
+            loadTimer = setTimeout(() => {
+                showError('The application did not finish loading. Check the Apps Script deployment permissions, then try again.');
+            }, LOAD_TIMEOUT_MS);
+
+            console.info('Loading Apps Script web app:', iframeUrl);
+        }
+
+        iframe.addEventListener('load', () => {
+            clearTimeout(loadTimer);
+            hasLoaded = true;
+            loadingMessage.classList.add('hide');
+            hideError();
+        });
+
+        iframe.addEventListener('error', () => {
+            showError('The Google Apps Script web app could not be loaded. Verify that the deployment URL is correct and publicly accessible.');
+        });
+
+        closeErrorModal.addEventListener('click', hideError);
+        retryButton.addEventListener('click', loadApplication);
+        window.addEventListener('keydown', event => {
+            if (event.key === 'Escape') hideError();
+        });
+
+        window.addEventListener('message', event => {
+            if (event.origin !== 'https://script.google.com' && event.origin !== 'https://script.googleusercontent.com') return;
+            if (!event.data || typeof event.data !== 'object') return;
+
+            if (event.data.type === 'setTitle' && event.data.title) {
+                document.title = event.data.title;
             }
         });
-        
-        // Handle browser back/forward buttons
-        window.addEventListener('popstate', function() {
-            // Send message to iframe about URL change
-            iframe.contentWindow.postMessage({
-                type: 'popstate',
-                url: window.location.href
-            }, '*');
+
+        window.addEventListener('popstate', () => {
+            if (iframe.contentWindow) {
+                iframe.contentWindow.postMessage({ type: 'popstate', url: window.location.href }, '*');
+            }
         });
-        
-        // Log successful setup (for debugging)
-        console.log('GitHub Pages wrapper loaded. Iframe URL:', iframeUrl);
+
+        loadApplication();
     </script>
 </body>
 </html>
