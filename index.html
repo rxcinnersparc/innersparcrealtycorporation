@@ -126,6 +126,52 @@
             display: block;
         }
 
+        /* Shared button motion: a restrained shine makes the next action obvious. */
+        .close-button,
+        .error-button {
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+                        box-shadow 0.22s ease,
+                        background 0.22s ease,
+                        color 0.22s ease;
+        }
+
+        .close-button::after,
+        .error-button::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background: linear-gradient(112deg, transparent 25%, rgba(255,255,255,0.62) 50%, transparent 75%);
+            transform: translateX(-140%);
+            transition: transform 0.55s ease;
+            pointer-events: none;
+        }
+
+        .close-button:hover,
+        .error-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .close-button:hover::after,
+        .error-button:hover::after {
+            transform: translateX(140%);
+        }
+
+        .close-button:active,
+        .error-button:active {
+            transform: translateY(0) scale(0.97);
+            transition-duration: 0.08s;
+        }
+
+        .close-button:focus-visible,
+        .error-button:focus-visible {
+            outline: 3px solid rgba(80, 92, 218, 0.35);
+            outline-offset: 3px;
+        }
+
         /* Close (x) button */
         .close-button {
             position: absolute;
@@ -140,12 +186,13 @@
             line-height: 1;
             padding: 4px 8px;
             border-radius: 50%;
-            transition: color 0.2s ease, background 0.2s ease;
+            box-shadow: 0 3px 10px rgba(34, 38, 137, 0.08);
         }
 
         .close-button:hover {
             color: #333;
             background: #f0f1f7;
+            box-shadow: 0 7px 16px rgba(34, 38, 137, 0.14);
         }
         
         .error-icon {
@@ -177,10 +224,28 @@
             font-weight: 700;
             cursor: pointer;
             font-size: 0.75rem;
+            box-shadow: 0 6px 14px rgba(34, 38, 137, 0.22);
         }
         
         .error-button:hover {
             background: #1a1d6e;
+            box-shadow: 0 10px 22px rgba(34, 38, 137, 0.3);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .close-button,
+            .error-button,
+            .close-button::after,
+            .error-button::after {
+                transition: none;
+            }
+
+            .close-button:hover,
+            .error-button:hover,
+            .close-button:active,
+            .error-button:active {
+                transform: none;
+            }
         }
     </style>
 </head>
