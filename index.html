@@ -6543,6 +6543,94 @@ input[type="range"]:focus { outline: none; }
 </div>
 
     <script>
+      // Apps Script supplies google.script.run automatically. On Vercel,
+      // route the same calls through the serverless endpoint at /api/site.
+      (function installVercelApiBridge() {
+        if (window.google && window.google.script && window.google.script.run) return;
+
+        var actions = {
+          getConfigJSON: 'config',
+          getInquiryTypes: 'inquiryTypes',
+          getServices: 'services',
+          getActivities: 'activities',
+          getOjtTestimonials: 'testimonials',
+          getCompanyHistory: 'history',
+          getFeaturedProperties: 'properties',
+          getMeetTeam: 'team',
+          getAwards: 'awards',
+          getRecentSales: 'sales',
+          getPartners: 'partners',
+          getPrivacyNotice: 'privacyNotice',
+          getQualifyingQuestions: 'qualifyingQuestions',
+          saveContactInquiry: 'contactInquiry',
+          saveConsultation: 'consultation'
+        };
+
+        var postActions = { saveContactInquiry: true, saveConsultation: true };
+        var chain = {
+          successHandler: null,
+          failureHandler: null,
+          withSuccessHandler: function(handler) {
+            this.successHandler = handler;
+            return this;
+          },
+          withFailureHandler: function(handler) {
+            this.failureHandler = handler;
+            return this;
+          }
+        };
+
+        var runProxy = new Proxy(chain, {
+          get: function(target, property) {
+            if (property in target) return target[property];
+
+            return function() {
+              var methodName = String(property);
+              var action = actions[methodName];
+              var args = Array.prototype.slice.call(arguments);
+              var successHandler = target.successHandler;
+              var failureHandler = target.failureHandler;
+              target.successHandler = null;
+              target.failureHandler = null;
+
+              if (!action) {
+                if (failureHandler) failureHandler(new Error('Unsupported API action: ' + methodName));
+                return target;
+              }
+
+              var request = fetch('/api/site?action=' + encodeURIComponent(action), postActions[methodName] ? {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify(args[0] || {})
+              } : {
+                method: 'GET',
+                headers: { 'Accept': 'application/json' }
+              });
+
+              request
+                .then(function(response) {
+                  if (!response.ok) throw new Error('API request failed: ' + response.status);
+                  return response.json();
+                })
+                .then(function(result) {
+                  if (!result.success) throw new Error(result.error || 'API request failed');
+                  var data = result.data;
+                  if (methodName === 'getConfigJSON') data = JSON.stringify(data || {});
+                  if (successHandler) successHandler(data);
+                })
+                .catch(function(error) {
+                  console.error('Vercel API error:', methodName, error);
+                  if (failureHandler) failureHandler(error);
+                });
+
+              return target;
+            };
+          }
+        });
+
+        window.google = { script: { run: runProxy } };
+      }());
+
       // ============================================================
       // GLOBAL VARIABLES
       // ============================================================
