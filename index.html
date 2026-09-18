@@ -4,6 +4,9 @@
     <base target="_top">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.googletagmanager.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <title>Inner SPARC Realty Corporation</title>
 
@@ -5888,7 +5891,7 @@ input[type="range"]:focus { outline: none; }
           <div class="header-content">
             <div class="logo-container">
               <a href="#home" onclick="event.preventDefault(); scrollToTop();">
-                <img id="logo" src="" alt="Company Logo" class="logo">
+                <img id="logo" alt="Company Logo" class="logo" decoding="async">
               </a>
             </div>
             <div class="company-info">
@@ -6705,31 +6708,37 @@ function parseBenefitsToHTML(benefitsText, isProjectFinder) {
       /**
        * Initialize the page
        */
-      window.onload = function() {
+      // Start after HTML parsing. window.onload waits for every image, iframe,
+      // font, and external resource, which makes the page feel unnecessarily slow.
+      document.addEventListener('DOMContentLoaded', function() {
+        // Essential data starts immediately so the first screen can render.
         loadConfigs();
         loadInquiryTypes();
-        setupBackToTop();
-        setupContactFabVisibility();
 
-        // Wire up the editable TCP input
-        var tcpDisplayEl = document.getElementById('tcpDisplay');
-        if (tcpDisplayEl) {
-          tcpDisplayEl.addEventListener('input', handleTcpInput);   // live formatting while typing
-          tcpDisplayEl.addEventListener('blur', formatTcpDisplay);  // final normalize on blur
-          tcpDisplayEl.addEventListener('keydown', handleTcpEnter); // Enter commits
-        }
+        // Defer noncritical interaction wiring until the browser is idle.
+        var defer = window.requestIdleCallback || function(callback) { setTimeout(callback, 0); };
+        defer(function() {
+          setupBackToTop();
+          setupContactFabVisibility();
 
-        // Fallback: hide loader after 8 seconds max
+          var tcpDisplayEl = document.getElementById('tcpDisplay');
+          if (tcpDisplayEl) {
+            tcpDisplayEl.addEventListener('input', handleTcpInput);
+            tcpDisplayEl.addEventListener('blur', formatTcpDisplay);
+            tcpDisplayEl.addEventListener('keydown', handleTcpEnter);
+          }
+        });
+
+        // Do not leave visitors behind an overlay indefinitely if a backend
+        // request is slow or fails. Failure handlers still report errors.
         setTimeout(function() {
           var loader = document.getElementById('initialLoader');
           if (loader && !loader.classList.contains('hidden')) {
             loader.classList.add('hidden');
-            setTimeout(function() {
-              loader.style.display = 'none';
-            }, 600);
+            setTimeout(function() { loader.style.display = 'none'; }, 400);
           }
-        }, 8000);
-      };
+        }, 5000);
+      }, { once: true });
 
       // Delegate "I am interested" clicks from BOTH properties and financing sections
       document.addEventListener('click', function(e) {
@@ -8986,7 +8995,13 @@ function initHeroCarousel() {
     heroImages.forEach(function(img, index) {
       var slide = document.createElement('div');
       slide.className = 'hero-slide' + (index === 0 ? ' active' : '');
-      slide.style.backgroundImage = 'url(' + img + ')';
+      // Load only the first hero image immediately. The remaining carousel
+      // images are assigned when needed to avoid a burst of large downloads.
+      if (index === 0) {
+        slide.style.backgroundImage = 'url("' + img.replace(/"/g, '\\"') + '")';
+      } else {
+        slide.setAttribute('data-bg', img);
+      }
       slide.style.position = 'absolute';
       slide.style.top = '0';
       slide.style.left = '0';
@@ -9041,6 +9056,16 @@ function changeHeroSlide(direction) {
   
   var total = slides.length;
   var newIndex = (currentHeroSlide + direction + total) % total;
+
+  // Lazy-load this slide's background just before it becomes visible.
+  var nextSlide = slides[newIndex];
+  if (nextSlide && !nextSlide.style.backgroundImage) {
+    var nextImage = nextSlide.getAttribute('data-bg');
+    if (nextImage) {
+      nextSlide.style.backgroundImage = 'url("' + nextImage.replace(/"/g, '\\"') + '")';
+      nextSlide.removeAttribute('data-bg');
+    }
+  }
   
   // Remove active from current
   slides[currentHeroSlide].classList.remove('active');
@@ -10357,7 +10382,7 @@ function createGalleryModal() {
       <button class="gallery-close" id="galleryClose">✕</button>
       <button class="gallery-nav prev" id="galleryPrev">❮</button>
       <button class="gallery-nav next" id="galleryNext">❯</button>
-      <img id="galleryImage" class="gallery-image" src="" alt="Gallery Image">
+      <img id="galleryImage" class="gallery-image" alt="Gallery Image" decoding="async">
       <div class="gallery-counter" id="galleryCounter"></div>
     </div>
   `;
