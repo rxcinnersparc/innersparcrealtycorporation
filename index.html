@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -268,128 +269,292 @@
     <iframe id="gas-iframe" title="Inner SPARC Realty Corporation web application" src="about:blank" allow="geolocation; clipboard-read; clipboard-write"></iframe>
 
     <script>
-        // ⚠️ IMPORTANT: Replace this with your actual Google Apps Script Web App URL
+        // ============================================================
+        // Inner SPARC Realty Corporation — Clean URL wrapper
+        //
+        // Public URL forms on Vercel/GitHub Pages:
+        //   /            → home
+        //   /about       → about section
+        //   /services    → services section
+        //   /properties  → properties section
+        //   /financing   → financing section
+        //   /portals     → portals section
+        //   /contact     → contact section
+        //
+        // The embedded GAS app speaks ?page= internally. This wrapper
+        // translates between the two worlds:
+        //
+        //   IN  : pathname           →  ?page=…        (iframe src on first load)
+        //   OUT : portfolio:navigate →  pushState('/clean/path')
+        //         portfolio:section  →  replaceState('/clean/path')  (scroll spy)
+        //   BACK: popstate           →  portfolio:popstate { page }
+        // ============================================================
+
         const GAS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbw4C6TqOXIofHtbXH_R0oPUIYakB0HbPjKqX0zURkLonZk23ZY9weuJ8TcjoXt9PazyFA/exec';
-        
+
+        // Public URL slugs the wrapper recognizes.
+        const ROUTABLE = ['home', 'about', 'services', 'properties', 'financing', 'portals', 'contact'];
+
+        // Public slug → internal page name (currently 1:1).
+        const PATH_TO_PAGE = {
+            'home':       'home',
+            'about':      'about',
+            'services':   'services',
+            'properties': 'properties',
+            'financing':  'financing',
+            'portals':    'portals',
+            'contact':    'contact'
+        };
+
+        // Internal page name → public URL slug (currently 1:1).
+        const PAGE_TO_PATH = {
+            'home':       'home',
+            'about':      'about',
+            'services':   'services',
+            'properties': 'properties',
+            'financing':  'financing',
+            'portals':    'portals',
+            'contact':    'contact'
+        };
+
         const iframe = document.getElementById('gas-iframe');
         const errorMessage = document.getElementById('errorMessage');
         const errorText = document.getElementById('errorText');
         const closeErrorModal = document.getElementById('closeErrorModal');
-        
+
         let hasLoaded = false;
         let loadTimeout;
-        
-        // Function to hide error modal
+
+        // ------------------------------------------------------------
+        // Path ⇄ page translators
+        // ------------------------------------------------------------
+        function pathnameToPage(pathname) {
+            var p = (pathname || '/').replace(/^\/+|\/+$/g, '').toLowerCase();
+            if (!p || p === 'index.html') return 'home';
+            if (ROUTABLE.indexOf(p) === -1) return 'home';
+            return PATH_TO_PAGE[p] || 'home';
+        }
+
+        function pageToPathname(page) {
+            var p = (page || '').toString().trim().toLowerCase();
+            if (!p || p === 'home') return '/';
+            var slug = PAGE_TO_PATH[p];
+            if (!slug) return '/';
+            return '/' + slug;
+        }
+
+        // ------------------------------------------------------------
+        // Build the iframe src from the current window.location.
+        // ------------------------------------------------------------
+        function buildIframeUrl() {
+            var page = pathnameToPage(window.location.pathname);
+            var url = new URL(GAS_WEBAPP_URL);
+            if (page && page !== 'home') url.searchParams.set('page', page);
+
+            // Forward unrelated query params (utm_*, etc.) untouched.
+            var incoming = new URLSearchParams(window.location.search);
+            incoming.forEach(function (value, key) {
+                if (key === 'page') return;
+                url.searchParams.set(key, value);
+            });
+
+            return url.toString();
+        }
+
+        // ------------------------------------------------------------
+        // Legacy redirect: /?page=about → /about
+        // ------------------------------------------------------------
+        (function migrateLegacyQueryString() {
+            try {
+                var params = new URLSearchParams(window.location.search);
+                var legacy = params.get('page');
+                if (!legacy) return;
+
+                var cleanPath = pageToPathname(legacy);
+                params.delete('page');
+                var tail = params.toString();
+                var newUrl = cleanPath + (tail ? ('?' + tail) : '');
+                window.history.replaceState({ page: legacy }, '', newUrl);
+            } catch (e) { /* ignore */ }
+        })();
+
+        // ------------------------------------------------------------
+        // Error modal helpers
+        // ------------------------------------------------------------
         function hideError() {
             errorMessage.classList.remove('show');
         }
 
-        // Event listener for close button
         closeErrorModal.addEventListener('click', hideError);
 
-        // Optional: Allow pressing ESC to close modal
         window.addEventListener('keydown', function(event) {
             if (event.key === 'Escape' && errorMessage.classList.contains('show')) {
                 hideError();
             }
         });
 
-        // Function to show error
         function showError(message) {
             if (hasLoaded) return;
-            
             clearTimeout(loadTimeout);
             errorText.textContent = message || 'Unable to load the application. Please check your internet connection and try again.';
             errorMessage.classList.add('show');
         }
-        
-        // Function to handle successful load
+
         function onIframeLoad() {
             if (hasLoaded) return;
-            
             clearTimeout(loadTimeout);
             hasLoaded = true;
             hideError();
         }
-        
-        // Function to handle iframe errors
+
         function onIframeError() {
             if (hasLoaded) return;
             showError('Failed to load the application. The Google Apps Script web app might be unavailable or the URL is incorrect.');
         }
-        
-        // Build the full URL with preserved query parameters and hash
-        function buildIframeUrl() {
-            let url = GAS_WEBAPP_URL;
-            
-            // Preserve URL parameters from the wrapper URL
-            const params = new URLSearchParams(window.location.search);
-            const hash = window.location.hash;
-            
-            if (params.toString()) {
-                url += '?' + params.toString();
-            }
-            
-            if (hash) {
-                url += (params.toString() ? '&' : '?') + 'hash=' + encodeURIComponent(hash.substring(1));
-            }
-            
-            return url;
-        }
-        
-        // Attach listeners before setting src so a fast load cannot be missed.
+
         iframe.addEventListener('load', onIframeLoad);
         iframe.addEventListener('error', onIframeError);
 
-        // Set iframe source.
         const iframeUrl = buildIframeUrl();
         iframe.src = iframeUrl;
 
-        // Google Apps Script may need extra time to initialize inside an iframe.
         loadTimeout = setTimeout(() => {
             if (!hasLoaded) {
                 showError('The application is taking longer than expected to load. Please try again.');
             }
         }, 45000);
-        
-        // Optional: Handle postMessage communication from the embedded app
-        window.addEventListener('message', function(event) {
-            // Verify origin for security (optional but recommended)
-            if (event.origin !== 'https://script.google.com') return;
-            
-            // Handle different message types from your Apps Script app
-            if (event.data && event.data.type) {
-                switch(event.data.type) {
-                    case 'navigate':
-                        // Update URL without reloading
-                        if (event.data.url && event.data.url !== window.location.pathname) {
-                            history.pushState(null, '', event.data.url);
-                        }
-                        break;
-                    case 'setTitle':
-                        if (event.data.title) {
-                            document.title = event.data.title;
-                        }
-                        break;
-                    case 'ready':
-                        console.log('Apps Script app is ready');
-                        break;
+
+        // ------------------------------------------------------------
+        // Track readiness so we can buffer early popstates.
+        // ------------------------------------------------------------
+        let iframeReady = false;
+        let pendingPage = null;
+
+        function isTrustedOrigin(origin) {
+            if (!origin || origin === 'null') return true;
+            return origin === 'https://script.google.com' ||
+                   origin === 'https://script.googleusercontent.com' ||
+                   origin.indexOf('.googleusercontent.com') !== -1 ||
+                   origin.indexOf('.google.com') !== -1;
+        }
+
+        // ------------------------------------------------------------
+        // Messages coming FROM the embedded GAS app.
+        // ------------------------------------------------------------
+        window.addEventListener('message', function (event) {
+            if (event.source === window) return;
+            if (!isTrustedOrigin(event.origin)) return;
+
+            const data = event.data;
+            if (!data || !data.type) return;
+
+            // Click: create a new history entry
+            if (data.type === 'portfolio:navigate') {
+                const page = (data.page || 'home').toString();
+                const newPath = pageToPathname(page);
+
+                const url = new URL(window.location.href);
+                url.pathname = newPath;
+                url.searchParams.delete('page');
+
+                const target = url.pathname + (url.search || '') + url.hash;
+                const current = window.location.pathname + window.location.search + window.location.hash;
+
+                if (target !== current) {
+                    if (data.replace) {
+                        window.history.replaceState({ page: page }, '', target);
+                    } else {
+                        window.history.pushState({ page: page }, '', target);
+                    }
                 }
+
+                if (data.title) document.title = data.title;
+                return;
+            }
+
+            // Scroll: update the URL silently
+            if (data.type === 'portfolio:section') {
+                const page = (data.page || 'home').toString();
+                const newPath = pageToPathname(page);
+
+                const url = new URL(window.location.href);
+                url.pathname = newPath;
+                url.searchParams.delete('page');
+
+                const target = url.pathname + (url.search || '') + url.hash;
+                const current = window.location.pathname + window.location.search + window.location.hash;
+
+                if (target !== current) {
+                    window.history.replaceState({ page: page }, '', target);
+                }
+
+                if (data.title) document.title = data.title;
+                return;
+            }
+
+            if (data.type === 'portfolio:setTitle') {
+                if (data.title) document.title = data.title;
+                return;
+            }
+
+            if (data.type === 'portfolio:ready') {
+                iframeReady = true;
+
+                // Prefer the buffered page over the current URL — the
+                // buffered value is what the user actually asked for.
+                const initial = pendingPage !== null
+                    ? pendingPage
+                    : pathnameToPage(window.location.pathname);
+                pendingPage = null;
+
+                // Fan out to every nested frame level.
+                function relayReady(win, depth) {
+                    if (!win || depth > 6) return;
+                    try {
+                        win.postMessage(
+                            { type: 'portfolio:popstate', page: initial },
+                            '*'
+                        );
+                    } catch (e) {}
+                    try {
+                        for (let i = 0; i < win.frames.length; i++) {
+                            relayReady(win.frames[i], depth + 1);
+                        }
+                    } catch (e) {}
+                }
+
+                relayReady(iframe.contentWindow, 0);
+                return;
             }
         });
-        
-        // Handle browser back/forward buttons
-        window.addEventListener('popstate', function() {
-            // Send message to iframe about URL change
-            iframe.contentWindow.postMessage({
-                type: 'popstate',
-                url: window.location.href
-            }, '*');
+
+        // ------------------------------------------------------------
+        // Browser back / forward → tell the iframe to re-route.
+        // ------------------------------------------------------------
+        window.addEventListener('popstate', function () {
+            const page = pathnameToPage(window.location.pathname);
+
+            if (!iframeReady) {
+                pendingPage = page;
+                return;
+            }
+
+            function relay(win, depth) {
+                if (!win || depth > 6) return;
+                try { win.postMessage({ type: 'portfolio:popstate', page: page }, '*'); } catch (e) {}
+                try {
+                    for (let i = 0; i < win.frames.length; i++) {
+                        relay(win.frames[i], depth + 1);
+                    }
+                } catch (e) {}
+            }
+
+            relay(iframe.contentWindow, 0);
         });
-        
+
         // Log successful setup (for debugging)
-        console.log('GitHub Pages wrapper loaded. Iframe URL:', iframeUrl);
+        console.log('Inner SPARC wrapper loaded. Iframe URL:', iframeUrl);
     </script>
 </body>
 </html>
-
+```
